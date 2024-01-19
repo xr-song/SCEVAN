@@ -493,7 +493,10 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
   }
   
   }
-  
+  print('t(mtx_CNA):')
+  print(t(mtx_CNA)[1:5,1:5])
+  print('Row names:')
+  print(rownames(t(mtx_CNA)))
   hm <- heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
             ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
             notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
@@ -506,7 +509,7 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
   print(hm)
   
   png(paste("./output/",samp,"heatmap.png",sep=""), height=h*250, width=5000, res=200)
-  print(hm)
+  hm
   dev.off()
   
 }
