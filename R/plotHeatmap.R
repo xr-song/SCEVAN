@@ -176,13 +176,14 @@ heatmap.3 <- function(x,
   print('Row names of heatmap:')
   print(rownames(x)[rowInd])
   if (is.null(labRow))
-    labRow <- if (is.null(rownames(x)))
-      (1:nr)[rowInd]
-  else labRow <- rownames(x)[rowInd]
+      labRow <- if (is.null(rownames(x)))
+          (1:nr)[rowInd]
+      else rownames(x)
+  else labRow <- labRow[rowInd]
   if (is.null(labCol))
     labCol <- if (is.null(colnames(x)))
-      (1:nc)[colInd]
-  else colnames(x)
+          (1:nc)[colInd]
+      else colnames(x)
   else labCol <- labCol[colInd]
   if (scale == "row") {
     retval$rowMeans <- rm <- rowMeans(x, na.rm = na.rm)
@@ -345,6 +346,9 @@ heatmap.3 <- function(x,
   
   if (!is.null(ylab))
     mtext(ylab, side = 4, line = margins[2] - 1.25)
+
+  axis(4, iy, labels = labRow, las = 2, line = -0.5, tick = 0, cex.axis = cexRow) # added for row labels
+  
   if (!missing(add.expr))
     eval(substitute(add.expr))
   if (!missing(colsep))
