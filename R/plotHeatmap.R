@@ -173,11 +173,12 @@ heatmap.3 <- function(x,
   x <- x[rowInd, colInd]
   x.unscaled <- x
   cellnote <- cellnote[rowInd, colInd]
+  print('Row names of heatmap:')
+  print(rownames(x)[rowInd])
   if (is.null(labRow))
     labRow <- if (is.null(rownames(x)))
       (1:nr)[rowInd]
-  else rownames(x)
-  else labRow <- labRow[rowInd]
+  else labRow <- rownames(x)[rowInd]
   if (is.null(labCol))
     labCol <- if (is.null(colnames(x)))
       (1:nc)[colInd]
@@ -493,17 +494,14 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
   }
   
   }
-  print('t(mtx_CNA):')
-  print(t(mtx_CNA)[1:5,1:5])
-  print('Row names:')
-  print(rownames(t(mtx_CNA)))
+
   hm <- heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
             ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
             notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
             keysize=1, density.info="none", trace="none",
             cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
             symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10),
-            labRow = rownames(t(mtx_CNA))) # add cell names
+            labRow = TRUE) # add cell names
   
   #legend("topright", paste("pred.",names(table(pred)),sep=""), pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=1)
   print(hm)
