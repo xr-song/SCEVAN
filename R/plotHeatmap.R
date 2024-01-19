@@ -31,7 +31,7 @@ heatmap.3 <- function(x,
                       side.height.fraction=0.3,
                       cexRow = 0.2 + 1/log10(nr),
                       cexCol = 0.2 + 1/log10(nc),
-                      labRow = NULL,
+                      labRow = TRUE,
                       labCol = NULL,
                       key = TRUE,
                       keysize = 1.5,
@@ -173,13 +173,14 @@ heatmap.3 <- function(x,
   x <- x[rowInd, colInd]
   x.unscaled <- x
   cellnote <- cellnote[rowInd, colInd]
-  print('Row names of heatmap:')
-  print(rownames(x)[rowInd])
   if (is.null(labRow))
       labRow <- if (is.null(rownames(x)))
           (1:nr)[rowInd]
       else rownames(x)
   else labRow <- labRow[rowInd]
+  print('Row names of heatmap:')
+  print(labRow)
+  write.table(labRow[rowInd], paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F)) # Write row names of heatmap
   if (is.null(labCol))
     labCol <- if (is.null(colnames(x)))
           (1:nc)[colInd]
@@ -343,12 +344,10 @@ heatmap.3 <- function(x,
            cex.axis = 1.5, gap.axis = 0)
     }
   }
-  
+                            
+  axis(4, iy, labels = labRow, las = 2, line = -0.5, tick = 0, cex.axis = cexRow) # added for row labels
   if (!is.null(ylab))
     mtext(ylab, side = 4, line = margins[2] - 1.25)
-
-  axis(4, iy, labels = labRow, las = 2, line = -0.5, tick = 0, cex.axis = cexRow) # added for row labels
-  
   if (!missing(add.expr))
     eval(substitute(add.expr))
   if (!missing(colsep))
