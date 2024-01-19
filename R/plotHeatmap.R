@@ -180,7 +180,7 @@ heatmap.3 <- function(x,
   else labRow <- labRow[rowInd]
   print('Row names of heatmap:')
   print(labRow)
-  write.table(labRow[rowInd], paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F)) # Write row names of heatmap
+  write.table(labRow[rowInd], paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F) # Write row names of heatmap
   if (is.null(labCol))
     labCol <- if (is.null(colnames(x)))
           (1:nc)[colInd]
