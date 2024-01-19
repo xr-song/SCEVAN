@@ -347,7 +347,7 @@ heatmap.3 <- function(x,
     }
   }
                             
-  axis(4, iy, labels = labRow, las = 2, line = -0.5, tick = 0, cex.axis = cexRow) # added for row labels
+  # axis(4, iy, labels = labRow, las = 2, line = -0.5, tick = 0, cex.axis = cexRow) # add this if you want to show row labels
   if (!is.null(ylab))
     mtext(ylab, side = 4, line = margins[2] - 1.25)
   if (!missing(add.expr))
@@ -500,13 +500,13 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
   
   }
 
-  png(paste("./output/",samp,"heatmap.png",sep=""), height=h*250, width=6500, res=200)
+  png(paste("./output/",samp,"heatmap.png",sep=""), height=h*250, width=500, res=200)
   heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
             ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
             notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
             keysize=1, density.info="none", trace="none",
             cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
-            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10))
+            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap", samp), cex.main=4, margins=c(10,10))
   dev.off()
 
   hm <- heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
