@@ -49,6 +49,7 @@ heatmap.3 <- function(x,
                       RowSideColorsSize = 1,
                       KeyValueName="Value",
                       labels_gene=NULL,
+                      write_cells=FALSE,
                       ...){
   
   invalid <- function (x) {
@@ -178,8 +179,10 @@ heatmap.3 <- function(x,
           (1:nr)[rowInd]
       else rownames(x)
   else labRow <- labRow[rowInd]
-  print('Writing row names of heatmap to file...')
-  write.table(labRow, paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F) # Write row names of heatmap
+  if (write_cells){
+    print('Writing row names of heatmap to file...')
+    write.table(labRow, paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F) # Write row names of heatmap
+  }
   if (is.null(labCol))
     labCol <- if (is.null(colnames(x)))
           (1:nc)[colInd]
@@ -497,15 +500,6 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
   
   }
 
-  heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
-            ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
-            notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
-            keysize=1, density.info="none", trace="none",
-            cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
-            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10))
-  
-  #legend("topright", paste("pred.",names(table(pred)),sep=""), pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=1)
-  
   png(paste("./output/",samp,"heatmap.png",sep=""), height=h*250, width=6500, res=200)
   heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
             ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
@@ -514,6 +508,15 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
             cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
             symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10))
   dev.off()
+
+  hm <- heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
+            ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
+            notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
+            keysize=1, density.info="none", trace="none",
+            cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
+            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10), write_cells = TRUE)
+  print(hm)
+  #legend("topright", paste("pred.",names(table(pred)),sep=""), pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=1)
   
 }
 
