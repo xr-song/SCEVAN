@@ -31,7 +31,7 @@ heatmap.3 <- function(x,
                       side.height.fraction=0.3,
                       cexRow = 0.2 + 1/log10(nr),
                       cexCol = 0.2 + 1/log10(nc),
-                      labRow = TRUE,
+                      labRow = NULL,
                       labCol = NULL,
                       key = TRUE,
                       keysize = 1.5,
@@ -178,9 +178,8 @@ heatmap.3 <- function(x,
           (1:nr)[rowInd]
       else rownames(x)
   else labRow <- labRow[rowInd]
-  print('Row names of heatmap:')
-  print(labRow)
-  write.table(labRow[rowInd], paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F) # Write row names of heatmap
+  print('Writing row names of heatmap to file...')
+  write.table(labRow, paste('./output/', main, '.cells.tsv', sep=''), quote = F, col.names = F, row.names = F) # Write row names of heatmap
   if (is.null(labCol))
     labCol <- if (is.null(colnames(x)))
           (1:nc)[colInd]
@@ -503,8 +502,7 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
             notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
             keysize=1, density.info="none", trace="none",
             cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
-            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10),
-            labRow = TRUE) # add cell names
+            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10))
   
   #legend("topright", paste("pred.",names(table(pred)),sep=""), pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=1)
   print(hm)
