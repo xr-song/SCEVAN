@@ -497,7 +497,7 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
   
   }
 
-  hm <- heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
+  heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
             ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
             notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
             keysize=1, density.info="none", trace="none",
@@ -505,10 +505,14 @@ plotCNA <- function(chr_lab, mtx_CNA, hcc, samp, pred = NULL, ground_truth = NUL
             symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10))
   
   #legend("topright", paste("pred.",names(table(pred)),sep=""), pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=1)
-  print(hm)
   
-  png(paste("./output/",samp,"heatmap.png",sep=""), height=h*250, width=5000, res=200)
-  hm
+  png(paste("./output/",samp,"heatmap.png",sep=""), height=h*250, width=6500, res=200)
+  heatmap.3(t(mtx_CNA),dendrogram="r", hcr = hcc,
+            ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
+            notecol="black",col=my_palette,breaks=col_breaks, key=TRUE, chr_lab = chr_lab,
+            keysize=1, density.info="none", trace="none",
+            cexRow=3.0,cexCol=3.0,cex.main=3.0,cex.lab=3.0,
+            symm=F,symkey=F,symbreaks=T,cex=3.0, main=paste("Heatmap ", samp), cex.main=4, margins=c(10,10))
   dev.off()
   
 }
